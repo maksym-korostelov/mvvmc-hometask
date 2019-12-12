@@ -13,10 +13,12 @@ final class ListCoordinator: ListCoordinatorProtocol {
     private var presenter: UINavigationController
     
     func start() {
-        let viewModel = ListViewModel()
-        viewModel.networkServise = NetworkService()
-        viewModel.model = ListModel()
-        viewModel.coordinator = self
+        let model = ListModel()
+        let viewModel = ListViewModel(
+            model: model,
+            networkServise: NetworkService(),
+            coordinator: self)
+        model.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             let storyboard = UIStoryboard(name: "List", bundle: nil)
             if let listView = storyboard.instantiateViewController(withIdentifier: "List") as? ListTableViewController {

@@ -10,4 +10,5 @@ import Foundation
 
 protocol ListModelProtocol: class {
     var randomList: [String] { get set }
+    var viewModel: ListViewModelProtocol? { get set }
 }

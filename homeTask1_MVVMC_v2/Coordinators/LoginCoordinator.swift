@@ -18,10 +18,12 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
     
     private var presenter: UINavigationController
     func start() {
-        let viewModel = LoginViewModel()
-        viewModel.networkService = NetworkService()
-        viewModel.model = LoginModel()
-        viewModel.coordinator = self
+        let model = LoginModel()
+        let viewModel = LoginViewModel(
+            model: model,
+            networkServise: NetworkService(),
+            coordinator: self)
+        model.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             let storyboard = UIStoryboard(name: "Login", bundle: nil)
             if let loginView = storyboard.instantiateViewController(withIdentifier: "Login") as? LoginViewController {

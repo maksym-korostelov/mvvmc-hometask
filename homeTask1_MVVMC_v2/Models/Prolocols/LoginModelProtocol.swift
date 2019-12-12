@@ -11,4 +11,5 @@ import Foundation
 protocol LoginModelProtocol: class {
     var userName: String { get set }
     var password: String { get set }
+    var viewModel: LoginViewModelProtocol? { get set }
 }

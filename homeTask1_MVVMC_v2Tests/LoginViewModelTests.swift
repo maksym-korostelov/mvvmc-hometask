@@ -10,7 +10,30 @@ import XCTest
 @testable import homeTask1_MVVMC_v2
 
 class LoginViewModelTests: XCTestCase {
+    var testViewModel: LoginViewModelProtocol!
+    
+    override func setUp() {
+        super.setUp()
+        
+        let model = MockLoginModel()
+        let networkServise = MockNetworkService()
+        let coordinator = MockLoginCoordinator()
+        
+        testViewModel = LoginViewModel(
+            model: model,
+            networkServise: networkServise,
+            coordinator: coordinator)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        testViewModel = nil
+    }
+    
     private final class MockLoginModel: LoginModelProtocol {
+        var viewModel: LoginViewModelProtocol?
+        
         var userName: String = ""
         var password: String = ""
     }
@@ -19,8 +42,14 @@ class LoginViewModelTests: XCTestCase {
         var expectation: XCTestExpectation?
         var viewModel: LoginViewModelProtocol!
         
-        func errorMessageDidChange(message: String) {
+        func errorMessageDidChange() {
             expectation?.fulfill()
+        }
+        func passwordDidChange() {
+            
+        }
+        func userNameDidChange() {
+            
         }
     }
     
@@ -48,30 +77,33 @@ class LoginViewModelTests: XCTestCase {
     }
     
     func testInitialDefaults() {
-        let vm = LoginViewModel()
-        XCTAssertEqual("", vm.userName)
-        XCTAssertEqual("", vm.password)
-        XCTAssertEqual("", vm.errorMessage)
-        XCTAssertNil(vm.view)
-        XCTAssertNil(vm.model)
-        XCTAssertNil(vm.coordinator)
+        XCTAssertEqual("", testViewModel.userName)
+        XCTAssertEqual("", testViewModel.password)
+        XCTAssertEqual("", testViewModel.errorMessage)
+        XCTAssertNil(testViewModel.view)
     }
     
     func testUserName() {
         let expectedValue = "user"
-        let vm = LoginViewModel()
-        vm.model = MockLoginModel()
-        vm.userName = expectedValue
+        let mockModel = MockLoginModel()
+        mockModel.userName = expectedValue
+        let vm = LoginViewModel(
+            model: mockModel,
+            networkServise: MockNetworkService(),
+            coordinator: MockLoginCoordinator())
         XCTAssertEqual(expectedValue, vm.userName)
-        XCTAssertEqual(expectedValue, vm.model?.userName)
     }
     
     func testPassword() {
-        let vm = LoginViewModel()
-        vm.model = MockLoginModel()
-        vm.password = "password"
+        let expectedValue = "password"
+        let mockModel = MockLoginModel()
+        mockModel.userName = expectedValue
+        let vm = LoginViewModel(
+            model: mockModel,
+            networkServise: MockNetworkService(),
+            coordinator: MockLoginCoordinator())
+        vm.password = expectedValue
         XCTAssertEqual("password", vm.password)
-        XCTAssertEqual("password", vm.model?.password)
     }
     
     func testFailureLoginMessage() {
@@ -79,15 +111,12 @@ class LoginViewModelTests: XCTestCase {
         let mockLoginView = MockLoginView()
         mockLoginView.expectation = expectation
         
-        let vm = LoginViewModel()
-        vm.view = mockLoginView
-        vm.model = MockLoginModel()
-        vm.networkService = MockNetworkService()
-        vm.userName = "userX"
-        vm.password = "passwordX"
-        vm.loginUser()
+        testViewModel.view = mockLoginView
+        testViewModel.userName = "userX"
+        testViewModel.password = "passwordX"
+        testViewModel.loginUser()
         
-        XCTAssertEqual("Invalid User Name or Password.", vm.errorMessage)
+        XCTAssertEqual("Invalid User Name or Password.", testViewModel.errorMessage)
         waitForExpectations(timeout: 1, handler: nil)
     }
     
@@ -96,10 +125,10 @@ class LoginViewModelTests: XCTestCase {
         let coordinator = MockLoginCoordinator()
         coordinator.expectation = expectation
         
-        let vm = LoginViewModel()
-        vm.coordinator = coordinator
-        vm.model = MockLoginModel()
-        vm.networkService = MockNetworkService()
+        let vm = LoginViewModel(
+            model: MockLoginModel(),
+            networkServise: MockNetworkService(),
+            coordinator: coordinator)
         vm.userName = "user"
         vm.password = "password"
         vm.loginUser()

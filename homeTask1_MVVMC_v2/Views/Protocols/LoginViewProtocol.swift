@@ -10,5 +10,7 @@ import Foundation
 
 protocol LoginViewProtocol: class {
     var viewModel: LoginViewModelProtocol! { get set }
-    func errorMessageDidChange(message: String)
+    func errorMessageDidChange()
+    func passwordDidChange()
+    func userNameDidChange()
 }

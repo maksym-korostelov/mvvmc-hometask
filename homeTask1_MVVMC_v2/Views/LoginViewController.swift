@@ -33,15 +33,26 @@ class LoginViewController: UIViewController, LoginViewProtocol {
         errorMessageLabel.isHidden = true
     }
     
-    func errorMessageDidChange(message: String) {
-        if message.isEmpty {
-            errorMessageLabel.text = ""
-            errorMessageLabel.isHidden = true
-        } else {
-            DispatchQueue.main.async { [weak self] in
-                self?.errorMessageLabel.isHidden = false
-                self?.errorMessageLabel.text = message
-            }
+    func errorMessageDidChange() {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            let errorMessage = self.viewModel.errorMessage
+            self.errorMessageLabel.isHidden = errorMessage.isEmpty
+            self.errorMessageLabel.text = errorMessage
+        }
+    }
+    
+    func userNameDidChange() {
+        DispatchQueue.main.async { [weak self] in
+            self?.userNameField.text = self?.viewModel.userName
+            self?.refreshView()
+        }
+    }
+    
+    func passwordDidChange() {
+        DispatchQueue.main.async { [weak self] in
+            self?.passwordField.text = self?.viewModel.password
+            self?.refreshView()
         }
     }
     

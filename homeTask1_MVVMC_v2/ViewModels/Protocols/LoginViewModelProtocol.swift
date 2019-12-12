@@ -12,6 +12,9 @@ protocol LoginViewModelProtocol: class {
     var userName: String { get set }
     var password: String { get set }
     var errorMessage: String { get }
+    var coordinator: LoginCoordinatorProtocol? { get }
     var view: LoginViewProtocol? { get set }
     func loginUser()
+    func passwordDidChange()
+    func userNameDidChange()
 }

@@ -11,43 +11,60 @@ import Foundation
 final class LoginViewModel: LoginViewModelProtocol {
     var userName: String {
         get {
-            return model?.userName ?? ""
+            return model.userName
         }
         set {
-            model?.userName = newValue
+            model.userName = newValue
         }
     }
     
     var password: String {
         get {
-            return model?.password ?? ""
+            return model.password
         }
         set {
-            model?.password = newValue
+            model.password = newValue
         }
     }
     
     fileprivate(set) var errorMessage: String = "" {
         didSet {
-            view?.errorMessageDidChange(message: errorMessage)
+            view?.errorMessageDidChange()
         }
     }
     
-    var networkService: NetworkService?
     weak var view: LoginViewProtocol?
-    weak var coordinator: LoginCoordinatorProtocol?
-    var model: LoginModelProtocol?
+    private(set) weak var coordinator: LoginCoordinatorProtocol?
+    private var model: LoginModelProtocol
+    private var networkService: NetworkService
+    
+    init(model: LoginModelProtocol,
+        networkServise: NetworkService,
+        coordinator: LoginCoordinatorProtocol) {
+        self.model = model
+        self.networkService = networkServise
+        self.coordinator = coordinator
+    }
     
     func loginUser() {
-        networkService?.requestLoginData(userName: userName, password: password) { [weak self] result in
-            switch result {
-            case .success( _):
-                print("login success")
-                self?.coordinator?.loginViewModelDidLogin()
-            case .failure(let error):
-                print("login failure")
-                self?.errorMessage = error.localizedDescription
-            }
+        networkService.requestLoginData(
+            userName: userName,
+            password: password) { [weak self] result in
+                switch result {
+                case .success( _):
+                    print("login success")
+                    self?.coordinator?.loginViewModelDidLogin()
+                case .failure(let error):
+                    print("login failure")
+                    self?.errorMessage = error.localizedDescription
+                }
         }
+    }
+    
+    func passwordDidChange() {
+        view?.passwordDidChange()
+    }
+    func userNameDidChange() {
+        view?.userNameDidChange()
     }
 }

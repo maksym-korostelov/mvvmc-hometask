@@ -11,5 +11,8 @@ import Foundation
 protocol ListViewModelProtocol: class {
     var view: ListViewProtocol? { get set }
     var numberOfRows: Int { get }
-    func item(at index: IndexPath) -> String
+    var randomList: [String] { get }
+    var coordinator: ListCoordinatorProtocol? { get }
+    func item(at index: IndexPath) -> String?
+    func updateRandomList(with list: [String])
 }
