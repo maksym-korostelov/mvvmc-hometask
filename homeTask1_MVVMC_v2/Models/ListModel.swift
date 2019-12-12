@@ -9,5 +9,10 @@
 import Foundation
 
 final class ListModel: ListModelProtocol {
-    var randomList: [String] = []
+    weak var viewModel: ListViewModelProtocol?
+    var randomList: [String] = [] {
+        didSet {
+            viewModel?.updateRandomList(with: randomList)
+        }
+    }
 }

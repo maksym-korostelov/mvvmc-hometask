@@ -9,36 +9,51 @@
 import Foundation
 
 final class ListViewModel: ListViewModelProtocol {
-    var networkServise: NetworkService?
+    
     var numberOfRows: Int {
-        return randomList?.count ?? 0
+        return randomList.count
+    }
+    var randomList: [String] {
+        return model.randomList
     }
     
     weak var view: ListViewProtocol?
-    weak var coordinator: ListCoordinatorProtocol?
-    var model: ListModelProtocol? {
-        didSet {
-            guard model != nil else { return }
-            networkServise?.getRandomList { [weak self] result in
-                switch result {
-                case .success(let list):
-                    self?.model?.randomList = list
-                    self?.view?.itemsDidChange()
-                case .failure(let error):
-                    debugPrint(error.localizedDescription)
-                }
+    
+    private(set) weak var coordinator: ListCoordinatorProtocol?
+    private var model: ListModelProtocol
+    private var networkServise: NetworkService
+    
+    init(model: ListModelProtocol,
+         networkServise: NetworkService,
+         coordinator: ListCoordinatorProtocol) {
+        self.model = model
+        self.networkServise = networkServise
+        self.coordinator = coordinator
+        loadData()
+    }
+    
+    func item(at index: IndexPath) -> String? {
+        if randomList.count > index.row {
+            return randomList[index.row]
+        }
+        return nil
+    }
+    
+    func updateRandomList(with list: [String]) {
+        view?.itemsDidChange()
+    }
+}
+
+private extension ListViewModel {
+    private func loadData() {
+        networkServise.getRandomList { [weak self] result in
+            switch result {
+            case .success(let list):
+                self?.model.randomList = list
+                self?.view?.itemsDidChange()
+            case .failure(let error):
+                debugPrint(error.localizedDescription)
             }
         }
-    }
-    
-    var randomList: [String]? {
-        return model?.randomList
-    }
-    
-    func item(at index: IndexPath) -> String {
-        if let list = randomList , list.count > index.row {
-            return list[index.row]
-        }
-        return ""
     }
 }

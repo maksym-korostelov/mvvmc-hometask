@@ -9,6 +9,15 @@
 import Foundation
 
 final class LoginModel: LoginModelProtocol {
-    var userName: String = ""
-    var password: String = ""
+    weak var viewModel: LoginViewModelProtocol?
+    var userName: String = "" {
+        didSet {
+            viewModel?.userNameDidChange()
+        }
+    }
+    var password: String = "" {
+        didSet {
+            viewModel?.passwordDidChange()
+        }
+    }
 }

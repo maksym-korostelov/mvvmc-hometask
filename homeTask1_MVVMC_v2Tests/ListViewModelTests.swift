@@ -10,6 +10,28 @@ import XCTest
 @testable import homeTask1_MVVMC_v2
 
 class ListViewModelTests: XCTestCase {
+    var testViewModel: ListViewModelProtocol!
+    
+    override func setUp() {
+        super.setUp()
+        
+        let model = MockListModel()
+        let networkServise = MockNetworkService()
+        let coordinator = MockListCoordinator()
+        
+        testViewModel = ListViewModel(
+            model: model,
+            networkServise: networkServise,
+            coordinator: coordinator)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        testViewModel = nil
+    }
+    
+    
     private final class MockNetworkService: NetworkService {        
         override func requestData(url: URL, completionHandler: @escaping (Result<Data, Error>) -> Void) {
             let str = "abc\ndef\ngh\n"
@@ -22,40 +44,34 @@ class ListViewModelTests: XCTestCase {
     }
     
     private final class MockListModel: ListModelProtocol {
+        var viewModel: ListViewModelProtocol?
         var randomList: [String] = []
     }
     
+    private final class MockListCoordinator: ListCoordinatorProtocol {
+        var delegate: LoginCoordinatorDelegate?
+        
+        func start() {
+            
+        }
+    }
+    
     func testInitialDefaults() {
-        let vm = ListViewModel()
-        XCTAssertEqual(0, vm.numberOfRows)
-        XCTAssertNil(vm.randomList)
-        XCTAssertNil(vm.view)
-        XCTAssertNil(vm.model)
-        XCTAssertNil(vm.coordinator)
+        XCTAssertNil(testViewModel.view)
     }
 
     func testDataLoadedAndParsed() {
         let expectedResult = ["abc", "def", "gh"]
-        let vm = ListViewModel()
-        vm.networkServise = MockNetworkService()
-        vm.model = MockListModel()
-        XCTAssertEqual(expectedResult, vm.randomList)
-        XCTAssertEqual(expectedResult, vm.model?.randomList)
+        XCTAssertEqual(expectedResult, testViewModel.randomList)
     }
     
     func testNumberOfRows() {
-        let vm = ListViewModel()
-        vm.networkServise = MockNetworkService()
-        vm.model = MockListModel()
-        XCTAssertEqual(3, vm.numberOfRows)
+        XCTAssertEqual(3, testViewModel.numberOfRows)
     }
     
     func testItemAtIndex() {
-        let vm = ListViewModel()
-        vm.networkServise = MockNetworkService()
-        vm.model = MockListModel()
-        XCTAssertEqual("abc", vm.item(at: IndexPath(row: 0, section: 0)))
-        XCTAssertEqual("def", vm.item(at: IndexPath(row: 1, section: 0)))
-        XCTAssertEqual("gh", vm.item(at: IndexPath(row: 2, section: 0)))
+        XCTAssertEqual("abc", testViewModel.item(at: IndexPath(row: 0, section: 0)))
+        XCTAssertEqual("def", testViewModel.item(at: IndexPath(row: 1, section: 0)))
+        XCTAssertEqual("gh", testViewModel.item(at: IndexPath(row: 2, section: 0)))
     }
 }
