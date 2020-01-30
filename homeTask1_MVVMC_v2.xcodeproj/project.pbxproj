@@ -36,6 +36,9 @@
 		A0D48C93239A4B070030CBC4 /* ListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D48C92239A4B070030CBC4 /* ListCoordinator.swift */; };
 		A0D48C95239A4F780030CBC4 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D48C94239A4F780030CBC4 /* ListTableViewController.swift */; };
 		A0D48C97239A50B10030CBC4 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0D48C96239A50B10030CBC4 /* List.storyboard */; };
+		A0DFABDC23E0282E00733A54 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = A0DFABDA23E0282D00733A54 /* Appfile */; };
+		A0DFABDD23E0282E00733A54 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = A0DFABDB23E0282D00733A54 /* Fastfile */; };
+		A0FE154523E17E6E006EE1D5 /* Gemfile in Resources */ = {isa = PBXBuildFile; fileRef = A0FE154423E17E6E006EE1D5 /* Gemfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +85,9 @@
 		A0D48C92239A4B070030CBC4 /* ListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoordinator.swift; sourceTree = "<group>"; };
 		A0D48C94239A4F780030CBC4 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		A0D48C96239A50B10030CBC4 /* List.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
+		A0DFABDA23E0282D00733A54 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
+		A0DFABDB23E0282D00733A54 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
+		A0FE154423E17E6E006EE1D5 /* Gemfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,8 @@
 		A0262687239973B400B88B86 /* homeTask1_MVVMC_v2 */ = {
 			isa = PBXGroup;
 			children = (
+				A0FE154423E17E6E006EE1D5 /* Gemfile */,
+				A0DFABD923E0282D00733A54 /* fastlane */,
 				A079ECD0239975340098D965 /* Models */,
 				A079ECD62399753D0098D965 /* Views */,
 				A079ECDE239975440098D965 /* ViewModels */,
@@ -237,6 +245,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		A0DFABD923E0282D00733A54 /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				A0DFABDA23E0282D00733A54 /* Appfile */,
+				A0DFABDB23E0282D00733A54 /* Fastfile */,
+			);
+			path = fastlane;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -318,9 +335,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DFABDD23E0282E00733A54 /* Fastfile in Resources */,
 				A0262693239973B500B88B86 /* LaunchScreen.storyboard in Resources */,
+				A0DFABDC23E0282E00733A54 /* Appfile in Resources */,
 				A0262690239973B500B88B86 /* Assets.xcassets in Resources */,
 				A0D48C97239A50B10030CBC4 /* List.storyboard in Resources */,
+				A0FE154523E17E6E006EE1D5 /* Gemfile in Resources */,
 				A079ECDB2399753D0098D965 /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
