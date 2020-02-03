@@ -11,13 +11,14 @@ import UIKit
 final class ListCoordinator: ListCoordinatorProtocol {
     weak var delegate: LoginCoordinatorDelegate?
     private var presenter: UINavigationController
-    
+
     func start() {
         let model = ListModel()
         let viewModel = ListViewModel(
             model: model,
             networkServise: NetworkService(),
-            coordinator: self)
+            coordinator: self
+        )
         model.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             let storyboard = UIStoryboard(name: "List", bundle: nil)
@@ -28,7 +29,7 @@ final class ListCoordinator: ListCoordinatorProtocol {
             }
         }
     }
-    
+
     init(presenter: UINavigationController) {
         self.presenter = presenter
     }

@@ -10,19 +10,19 @@ import UIKit
 
 final class LoginCoordinator: LoginCoordinatorProtocol {
     weak var delegate: LoginCoordinatorDelegate?
-    
+
     func loginViewModelDidLogin() {
         delegate?.loginCoordinatorDidFinish()
     }
-    
-    
+
     private var presenter: UINavigationController
     func start() {
         let model = LoginModel()
         let viewModel = LoginViewModel(
             model: model,
             networkServise: NetworkService(),
-            coordinator: self)
+            coordinator: self
+        )
         model.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             let storyboard = UIStoryboard(name: "Login", bundle: nil)
@@ -33,7 +33,7 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
             }
         }
     }
-    
+
     init(presenter: UINavigationController) {
         self.presenter = presenter
     }

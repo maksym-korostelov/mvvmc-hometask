@@ -9,30 +9,38 @@
 import UIKit
 
 class LoginViewController: UIViewController, LoginViewProtocol {
-    @IBOutlet weak var userNameField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var errorMessageLabel: UILabel!
-    
+    @IBOutlet var userNameField: UITextField!
+    @IBOutlet var passwordField: UITextField!
+    @IBOutlet var errorMessageLabel: UILabel!
+
     var viewModel: LoginViewModelProtocol!
-    
-    @IBAction func loginButtonPressed(_ sender: UIButton) {
+
+    @IBAction func loginButtonPressed(_: UIButton) {
         viewModel.loginUser()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         refreshView()
 
-        userNameField.addTarget(self, action: #selector(userNameFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        passwordField.addTarget(self, action: #selector(passwordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        userNameField.addTarget(
+            self,
+            action: #selector(userNameFieldDidChange(_:)),
+            for: UIControl.Event.editingChanged
+        )
+        passwordField.addTarget(
+            self,
+            action: #selector(passwordFieldDidChange(_:)),
+            for: UIControl.Event.editingChanged
+        )
     }
-    
+
     func refreshView() {
         errorMessageLabel.text = ""
         errorMessageLabel.isHidden = true
     }
-    
+
     func errorMessageDidChange() {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
@@ -41,28 +49,28 @@ class LoginViewController: UIViewController, LoginViewProtocol {
             self.errorMessageLabel.text = errorMessage
         }
     }
-    
+
     func userNameDidChange() {
         DispatchQueue.main.async { [weak self] in
             self?.userNameField.text = self?.viewModel.userName
             self?.refreshView()
         }
     }
-    
+
     func passwordDidChange() {
         DispatchQueue.main.async { [weak self] in
             self?.passwordField.text = self?.viewModel.password
             self?.refreshView()
         }
     }
-    
+
     @objc func userNameFieldDidChange(_ textField: UITextField) {
         if let text = textField.text {
             viewModel?.userName = text
         }
         refreshView()
     }
-    
+
     @objc func passwordFieldDidChange(_ textField: UITextField) {
         if let text = textField.text {
             viewModel?.password = text

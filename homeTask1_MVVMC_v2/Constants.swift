@@ -9,5 +9,8 @@
 import Foundation
 
 enum Constants {
-    static let randomDataUrl = URL(string: "https://www.random.org/strings/?num=10&len=8&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new")
+    static var randomDataUrl: URL? {
+        return URL(string:
+            "https://www.random.org/strings/?num=10&len=8&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new")
+    }
 }

@@ -11,5 +11,3 @@ import Foundation
 protocol CoordinatorProtocol: class {
     func start()
 }
-
-
