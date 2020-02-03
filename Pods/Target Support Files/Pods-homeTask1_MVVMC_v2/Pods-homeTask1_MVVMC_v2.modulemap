@@ -1,0 +1,6 @@
+framework module Pods_homeTask1_MVVMC_v2 {
+  umbrella header "Pods-homeTask1_MVVMC_v2-umbrella.h"
+
+  export *
+  module * { export * }
+}
