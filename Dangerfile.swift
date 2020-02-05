@@ -2,6 +2,8 @@ import Danger
 
 let danger = Danger()
 
+SwiftLint.lint()
+
 // Pull request size
 let bigPRThreshold = 500
 let additions = danger.github.pullRequest.additions!
