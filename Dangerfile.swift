@@ -41,8 +41,8 @@ if testFiles.isEmpty {
 message("🎉 The PR added \(additions) and removed \(deletions) lines. 🗂 \(changedFiles) files changed.")
 
 xcov.report(
-   scheme: 'homeTask1_MVVMC_v2',
-   workspace: 'homeTask1_MVVMC_v2.xcworkspace',
+   scheme: "homeTask1_MVVMC_v2",
+   workspace: "homeTask1_MVVMC_v2.xcworkspace",
    //exclude_targets: 'Demo.app',
    minimum_coverage_percentage: 90
 )
