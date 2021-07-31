@@ -21,7 +21,7 @@ class LoginViewModelTests: XCTestCase {
 
         testViewModel = LoginViewModel(
             model: model,
-            networkServise: networkServise,
+            networkService: networkServise,
             coordinator: coordinator
         )
     }
@@ -90,7 +90,7 @@ class LoginViewModelTests: XCTestCase {
         mockModel.userName = expectedValue
         let viewModel = LoginViewModel(
             model: mockModel,
-            networkServise: MockNetworkService(),
+            networkService: MockNetworkService(),
             coordinator: MockLoginCoordinator()
         )
         XCTAssertEqual(expectedValue, viewModel.userName)
@@ -102,7 +102,7 @@ class LoginViewModelTests: XCTestCase {
         mockModel.userName = expectedValue
         let viewModel = LoginViewModel(
             model: mockModel,
-            networkServise: MockNetworkService(),
+            networkService: MockNetworkService(),
             coordinator: MockLoginCoordinator()
         )
         viewModel.password = expectedValue
@@ -130,7 +130,7 @@ class LoginViewModelTests: XCTestCase {
 
         let viewModel = LoginViewModel(
             model: MockLoginModel(),
-            networkServise: MockNetworkService(),
+            networkService: MockNetworkService(),
             coordinator: coordinator
         )
         viewModel.userName = "user"
