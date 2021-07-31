@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ListViewProtocol: class {
+protocol ListViewProtocol: AnyObject {
     var viewModel: ListViewModelProtocol? { get set }
     func itemsDidChange()
 }

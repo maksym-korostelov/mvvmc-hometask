@@ -15,6 +15,7 @@ final class LoginModel: LoginModelProtocol {
             viewModel?.userNameDidChange()
         }
     }
+
     var password: String = "" {
         didSet {
             viewModel?.passwordDidChange()

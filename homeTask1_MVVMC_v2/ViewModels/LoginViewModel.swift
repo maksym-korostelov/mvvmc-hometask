@@ -17,7 +17,7 @@ final class LoginViewModel: LoginViewModelProtocol {
             model.userName = newValue
         }
     }
-    
+
     var password: String {
         get {
             return model.password
@@ -26,44 +26,46 @@ final class LoginViewModel: LoginViewModelProtocol {
             model.password = newValue
         }
     }
-    
+
     fileprivate(set) var errorMessage: String = "" {
         didSet {
             view?.errorMessageDidChange()
         }
     }
-    
+
     weak var view: LoginViewProtocol?
     private(set) weak var coordinator: LoginCoordinatorProtocol?
     private var model: LoginModelProtocol
     private var networkService: NetworkService
-    
+
     init(model: LoginModelProtocol,
-        networkServise: NetworkService,
-        coordinator: LoginCoordinatorProtocol) {
+         networkService: NetworkService,
+         coordinator: LoginCoordinatorProtocol) {
         self.model = model
-        self.networkService = networkServise
+        self.networkService = networkService
         self.coordinator = coordinator
     }
-    
+
     func loginUser() {
         networkService.requestLoginData(
             userName: userName,
-            password: password) { [weak self] result in
-                switch result {
-                case .success( _):
-                    print("login success")
-                    self?.coordinator?.loginViewModelDidLogin()
-                case .failure(let error):
-                    print("login failure")
-                    self?.errorMessage = error.localizedDescription
-                }
+            password: password
+        ) { [weak self] result in
+            switch result {
+            case .success:
+                print("login success")
+                self?.coordinator?.loginViewModelDidLogin()
+            case let .failure(error):
+                print("login failure")
+                self?.errorMessage = error.localizedDescription
+            }
         }
     }
-    
+
     func passwordDidChange() {
         view?.passwordDidChange()
     }
+
     func userNameDidChange() {
         view?.userNameDidChange()
     }

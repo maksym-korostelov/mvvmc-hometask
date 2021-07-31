@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ListViewModelProtocol: class {
+protocol ListViewModelProtocol: AnyObject {
     var view: ListViewProtocol? { get set }
     var numberOfRows: Int { get }
     var randomList: [String] { get }

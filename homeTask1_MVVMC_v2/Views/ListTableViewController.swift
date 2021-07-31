@@ -14,27 +14,26 @@ class ListTableViewController: UITableViewController, ListViewProtocol {
             self?.tableView.reloadData()
         }
     }
-    
+
     var viewModel: ListViewModelProtocol?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView()
-}
+    }
 
     // MARK: - Table view data source
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel?.numberOfRows ?? 0
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "randomDataReuseIdentifier", for: indexPath)
 
         cell.textLabel?.text = viewModel?.item(at: indexPath)
-        
+
         return cell
     }
 }

@@ -39,15 +39,16 @@ extension LoginError: LocalizedError {
 
 class NetworkService {
     // MARK: Random List
+
     func getRandomList(completionHandler: @escaping (Result<[String], RequestRandomDataError>) -> Void) {
         guard let url = Constants.randomDataUrl else { completionHandler(.failure(.somethingWentWrong)); return }
-        
+
         requestData(url: url) { [weak self] result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 debugPrint(error.localizedDescription)
                 completionHandler(.failure(.somethingWentWrong))
-            case .success(let data):
+            case let .success(data):
                 if let result = self?.parseRandomData(data) {
                     completionHandler(.success(result))
                 } else {
@@ -56,18 +57,18 @@ class NetworkService {
             }
         }
     }
-    
+
     private func parseRandomData(_ data: Data) -> [String]? {
         guard let dataString = String(data: data, encoding: .utf8) else { return nil }
-        
+
         return dataString
             .split { $0.isNewline }
             .map { String($0) }
     }
-    
+
     func requestData(url: URL, completionHandler: @escaping (Result<Data, Error>) -> Void) {
         DispatchQueue.global().async {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 if let error = error {
                     completionHandler(.failure(error))
                 } else {
@@ -82,11 +83,16 @@ class NetworkService {
             task.resume()
         }
     }
-    
+
     // MARK: Login
-    func requestLoginData(userName: String, password: String, completionHandler: @escaping (Result<Bool, LoginError>) -> Void) {
+
+    func requestLoginData(
+        userName: String,
+        password: String,
+        completionHandler: @escaping (Result<Bool, LoginError>) -> Void
+    ) {
         DispatchQueue.global().async {
-            guard userName == "user" && password == "123qwe" else {
+            guard userName == "user", password == "123qwe" else {
                 completionHandler(.failure(LoginError.wrongCredentials))
                 return
             }
