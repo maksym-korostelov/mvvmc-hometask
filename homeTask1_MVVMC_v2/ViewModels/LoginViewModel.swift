@@ -39,10 +39,10 @@ final class LoginViewModel: LoginViewModelProtocol {
     private var networkService: NetworkService
 
     init(model: LoginModelProtocol,
-         networkServise: NetworkService,
+         networkService: NetworkService,
          coordinator: LoginCoordinatorProtocol) {
         self.model = model
-        networkService = networkServise
+        self.networkService = networkService
         self.coordinator = coordinator
     }
 

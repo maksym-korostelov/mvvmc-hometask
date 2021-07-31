@@ -20,7 +20,7 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         let model = LoginModel()
         let viewModel = LoginViewModel(
             model: model,
-            networkServise: NetworkService(),
+            networkService: NetworkService(),
             coordinator: self
         )
         model.viewModel = viewModel
