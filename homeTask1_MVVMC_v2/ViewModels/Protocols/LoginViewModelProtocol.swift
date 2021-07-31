@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LoginViewModelProtocol: class {
+protocol LoginViewModelProtocol: AnyObject {
     var userName: String { get set }
     var password: String { get set }
     var errorMessage: String { get }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LoginCoordinatorDelegate: class {
+protocol LoginCoordinatorDelegate: AnyObject {
     func loginCoordinatorDidFinish()
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ListModelProtocol: class {
+protocol ListModelProtocol: AnyObject {
     var randomList: [String] { get set }
     var viewModel: ListViewModelProtocol? { get set }
 }

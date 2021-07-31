@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LoginViewProtocol: class {
+protocol LoginViewProtocol: AnyObject {
     var viewModel: LoginViewModelProtocol! { get set }
     func errorMessageDidChange()
     func passwordDidChange()
